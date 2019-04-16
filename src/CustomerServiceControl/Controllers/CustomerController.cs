@@ -22,16 +22,21 @@ namespace CustomerServiceControl.Controllers
 
         public ActionResult Index()
         {
-            return View(this.customerServices.GetAll());
+            return HttpNotFound();
         }
 
         public ActionResult Create()
         {
-            var viewModel = new CustomerViewModel
+            var viewModel = new CustomerViewModel();
+            try
             {
-                Customer = new Customer(),
-                ProductAndServiceItems = this.CreateProductAndServiceItems(this.productAndServiceServices.GetAll().ToList(), new List<ProductAndService>())
-            };
+                viewModel.Customer = new Customer();
+                viewModel.ProductAndServiceItems = this.CreateProductAndServiceItems(this.productAndServiceServices.GetAll().ToList(), new List<ProductAndService>());
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Erro ao tentar criar um cliente: {ex.Message}");
+            }
             return View("Customer", viewModel);
         }
 
@@ -40,23 +45,40 @@ namespace CustomerServiceControl.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customer = viewModel.Customer;
-                customer.ProductsAndServices = this.GetProductAndServiveListFromItemSelected(viewModel.ProductAndServiceItems);
-                this.customerServices.Add(customer);
-                return RedirectToAction("Index", "Home");
+                try
+                {
+                    var customer = viewModel.Customer;
+                    customer.ProductsAndServices = this.GetProductAndServiveListFromItemSelected(viewModel.ProductAndServiceItems);
+                    this.customerServices.Add(customer);
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, $"Erro ao tentar criar um cliente: {ex.Message}");
+                }
             }
             return View("Customer", viewModel);
         }
 
         public ActionResult Edit(int? id)
         {
-            var customerEdited = this.customerServices.GetById(id);
-            var viewModel = new CustomerViewModel
+            if (id == null)
+                return HttpNotFound();
+            try
             {
-                Customer = customerEdited,
-                ProductAndServiceItems = this.CreateProductAndServiceItems(this.productAndServiceServices.GetAll().ToList(), customerEdited.ProductsAndServices.ToList())
-            };
-            return View("Customer", viewModel);
+                var customerEdited = this.customerServices.GetById(id);
+                var viewModel = new CustomerViewModel
+                {
+                    Customer = customerEdited,
+                    ProductAndServiceItems = this.CreateProductAndServiceItems(this.productAndServiceServices.GetAll().ToList(), customerEdited.ProductsAndServices.ToList())
+                };
+                return View("Customer", viewModel);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Erro ao tentar alterar um cliente: {ex.Message}");
+            }
+            return View("Customer", new CustomerViewModel());
         }
 
         [HttpPost]
@@ -64,26 +86,46 @@ namespace CustomerServiceControl.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customerEdited = viewModel.Customer;
-                customerEdited.ProductsAndServices = this.GetProductAndServiveListFromItemSelected(viewModel.ProductAndServiceItems);
-                this.customerServices.Update(customerEdited);
-                return RedirectToAction("Index", "Home");
+                try
+                {
+                    var customerEdited = viewModel.Customer;
+                    customerEdited.ProductsAndServices = this.GetProductAndServiveListFromItemSelected(viewModel.ProductAndServiceItems);
+                    this.customerServices.Update(customerEdited);
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, $"Erro ao tentar alterar um cliente: {ex.Message}");
+                }
             }
             return View("Customer", viewModel);
         }
 
         public ActionResult Delete(int? id)
         {
-            var viewModel = new CustomerViewModel
+            var viewModel = new CustomerViewModel();
+            try
             {
-                Customer = this.customerServices.GetById(id),
-            };
+                viewModel.Customer = this.customerServices.GetById(id);
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Erro ao tentar excluir um cliente: {ex.Message}");
+            }
             return View("ConfirmDelete", viewModel);
         }
 
         public ActionResult Report()
         {
-            return View(this.customerServices.GetAllOrderByName().ToList());
+            try
+            {
+                return View(this.customerServices.GetAllOrderByName().ToList());
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Erro ao tentar gerar relatório: {ex.Message}");
+            }
+            return View();
         }
 
         private List<ProductAndServiceItem> CreateProductAndServiceItems(List<ProductAndService> productAndServiceList, List<ProductAndService> productAndServiceSelected)

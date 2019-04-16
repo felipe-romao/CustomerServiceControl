@@ -21,19 +21,30 @@ namespace CustomerServiceControl.Controllers
 
         public ActionResult Index()
         {
-            var viewModel = new RootViewModel()
+            var viewModel = new RootViewModel();
+            try
             {
-                Customers = this.customerServices.GetAll(),
-            };
+                viewModel.Customers = this.customerServices.GetAll();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Erro ao carregar página inicial: {ex.Message}");
+            }
 
             return View(viewModel);
         }
 
         public ActionResult CustomerSearch(RootViewModel viewModel)
         {
-            var customersFromSearch = this.customerServices.GetByFilter(viewModel.SearchType, viewModel.SearchValue);
-            viewModel.Customers = customersFromSearch;
-
+            try
+            {
+                var customersFromSearch = this.customerServices.GetByFilter(viewModel.SearchType, viewModel.SearchValue);
+                viewModel.Customers = customersFromSearch;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Erro ao tentar fazer uma busca: {ex.Message}");
+            }
             return View("Index", viewModel);
         }
     }
