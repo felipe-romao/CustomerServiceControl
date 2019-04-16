@@ -1,0 +1,13 @@
+﻿@model CustomerServiceControl.ViewModels.ProductAndServiceItem
+
+<div class="col-lg-6">
+    <div>
+        @Html.HiddenFor(x => x.Id)
+        @Html.CheckBoxFor(x => x.IsChecked)
+        @Html.LabelFor(x => x.IsChecked, Model.Display)
+        <br />
+    </div>
+    
+</div>
+
+    
