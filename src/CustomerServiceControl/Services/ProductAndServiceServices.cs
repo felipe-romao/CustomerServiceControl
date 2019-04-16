@@ -82,9 +82,6 @@ namespace CustomerServiceControl.Services
         {
             try
             {
-                if (productAndService.Id == null)
-                    throw new CustomerServicesException("Item selecionado não possui Id.");
-
                 using (var context = new DBContext())
                 {
                     context.Entry(productAndService).State = EntityState.Modified;

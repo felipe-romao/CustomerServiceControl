@@ -167,8 +167,10 @@ C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\bin\pt-br
 C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\bin\pt-br\System.Web.WebPages.resources.dll
 C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\bin\pt-br\System.Web.WebPages.Deployment.resources.dll
 C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\bin\pt-br\System.Web.WebPages.Razor.resources.dll
-C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.csprojAssemblyReference.cache
 C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.csproj.CoreCompileInputs.cache
 C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.csproj.CopyComplete
 C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.dll
 C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.pdb
+C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.csprojAssemblyReference.cache
+C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.Properties.Resources.resources
+C:\git_home_projects\CustomerServiceControl\src\CustomerServiceControl\obj\Debug\CustomerServiceControl.csproj.GenerateResource.cache

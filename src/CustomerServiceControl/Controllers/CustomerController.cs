@@ -115,6 +115,13 @@ namespace CustomerServiceControl.Controllers
             return View("ConfirmDelete", viewModel);
         }
 
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            this.customerServices.Delete(id);
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult Report()
         {
             try
